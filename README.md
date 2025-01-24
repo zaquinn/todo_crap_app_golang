@@ -3,7 +3,7 @@ Este repositório faz parte de um conjunto de três repositórios onde implement
 - Performance
 - Facilidade de manutenção e extensão
 
-As outras versões do projeto serão desenvolvidas em C# com ASP.NET e Zig. Nas versões em Zig e Go o intuito é utilizar o mínimo de depêndencias externas possível, atendo-se ao disponibilizado pela linguagem e focando em criar implementações próprias para problemas comuns.
+A outra versão do projeto será desenvolvidas em Zig. O intuito é utilizar o mínimo de depêndencias externas possível, atendo-se ao disponibilizado pela linguagem e focando em criar implementações próprias para problemas comuns.
 
 Todo:
 - tornar validateTodoTitleLen e outras validações mais genéricas, permitindo reutilizações pra validações em outras partes do projeto
