@@ -3,6 +3,7 @@ package todo
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 )
 
 type ResponseError struct {
@@ -45,5 +46,32 @@ func RetrieveTodoService(w http.ResponseWriter, r *http.Request, repository Repo
 		json.NewEncoder(w).Encode(&ResponseError{Message: err.Error()})
 		return
 	}
+	json.NewEncoder(w).Encode(res)
+}
+
+func ListTodosService(w http.ResponseWriter, r *http.Request, repository Repository) {
+	ctx := r.Context()
+
+	limitStr := r.URL.Query().Get("limit")
+	offsetStr := r.URL.Query().Get("offset")
+
+	limit := 10
+	if limitStr != "" {
+		limit, _ = strconv.Atoi(limitStr)
+	}
+
+	offset := 0
+	if offsetStr != "" {
+		offset, _ = strconv.Atoi(offsetStr)
+	}
+
+	res, err := repository.GetTodos(ctx, limit, offset)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(&ResponseError{Message: err.Error()})
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(res)
 }
