@@ -2,6 +2,7 @@ package main
 
 import (
 	"crud/todo-crap-app/internal/todo"
+	"crud/todo-crap-app/pkg/middleware"
 	"database/sql"
 	"fmt"
 	"log"
@@ -31,7 +32,7 @@ func main() {
 	todo.RegisterRoutes(mux, todoRepository)
 
 	fmt.Println("Starting server on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	log.Fatal(http.ListenAndServe(":8080", middleware.LoggingMiddleware(middleware.CorsMiddleware(mux))))
 }
 
 func runMigrations(db *sql.DB) error {
